@@ -52,10 +52,9 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
 
         unsigned int currentKey = currentState.toInt();
 
-        if (closedList.find(currentKey) == closedList.end())
-            closedList.insert(currentKey);
-        else
-            continue;
+        
+        closedList.insert(currentKey);
+      
 
 
         for (auto i : neighbours.getAdjacentOf(currentState.getEmptyIndex()))
@@ -72,7 +71,7 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
             openList.push({ *childNode, evaluateNode(*childNode, h) });
             
         }   
-
+        
     }
 
     return 69696969;
