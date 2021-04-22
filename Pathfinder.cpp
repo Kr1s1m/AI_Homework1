@@ -29,7 +29,7 @@ unsigned int Pathfinder::getSolution()
 unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const State&)> h)
 {
     std::priority_queue<NodeValuePair, std::vector<NodeValuePair>, std::greater<NodeValuePair>> openList;
-    std::map<unsigned int, const State&> closedList;
+    std::set<unsigned int> closedList;
 
     unsigned int boardSize = goalNode.getState().getBoardSize();
 
@@ -49,7 +49,13 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
         }
 
         openList.pop();
-        closedList.insert({ currentState.toInt(), currentState });
+
+        unsigned int currentKey = currentState.toInt();
+
+        if (closedList.find(currentKey) == closedList.end())
+            closedList.insert(currentKey);
+        else
+            continue;
 
 
         for (auto i : neighbours.getAdjacentOf(currentState.getEmptyIndex()))
@@ -57,7 +63,7 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
             State childState(currentState);
             childState.swapEmptyWith(i);
 
-            if (closedList.count(childState.toInt()))
+            if (closedList.find(childState.toInt()) != closedList.end())
                 continue;
 
 

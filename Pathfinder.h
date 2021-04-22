@@ -8,6 +8,7 @@
 #include <queue>
 #include <stack>
 #include <map>
+#include <set>
 #include <functional>
 
 class Pathfinder
