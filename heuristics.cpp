@@ -9,7 +9,7 @@ unsigned int manhattanSum(const State& state)
 	int currX, currY, goalX, goalY;
 
 	std::vector<unsigned int> tiles = state.getTiles();
-	unsigned int currSize = tiles.size();
+	unsigned int currSize = state.getBoardSize();
 
 	for (unsigned int i = 0; i < currSize; i++)
 	{
@@ -43,9 +43,7 @@ unsigned int countDifferences(const State& state)
 			continue;
 
 		if (tiles[i] != i)
-		{
 			count++;
-		}
 	}
 
 	return count;
