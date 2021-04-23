@@ -49,13 +49,7 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
         }
 
         openList.pop();
-
-        unsigned int currentKey = currentState.toInt();
-
-        
-        closedList.insert(currentKey);
-      
-
+        closedList.insert(currentState.toInt());
 
         for (auto i : neighbours.getAdjacentOf(currentState.getEmptyIndex()))
         {
