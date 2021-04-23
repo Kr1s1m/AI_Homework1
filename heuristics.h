@@ -3,5 +3,6 @@
 
 unsigned int manhattanSum(const State&);
 unsigned int countDifferences(const State&);
+unsigned int euqlideanSum(const State&);
 unsigned int combined(const State&);
 

@@ -5,10 +5,10 @@
 Pathfinder::Pathfinder( Node& s, const Node& g, Pathfinding p, Heuristic h) : 
     startNode(s), goalNode(g), pathfinding(p), heuristic(h), goalFound(false)
 {
-
+    
 }
 
-unsigned int Pathfinder::getSolution()
+unsigned int Pathfinder::getBestPath()
 {
     switch (heuristic)
     {
@@ -20,9 +20,28 @@ unsigned int Pathfinder::getSolution()
             return getOptimalBasedOn(countDifferences);
         break;
 
+        case Heuristic::Euqlid:
+            return getOptimalBasedOn(euqlideanSum);
+        break;
+
         case Heuristic::Combined:
             return getOptimalBasedOn(combined);
         break;
+
+        default:
+
+        break;
+    }
+}
+
+
+
+void Pathfinder::getOptimalPath(std::shared_ptr<Node> pathPtr)
+{
+    while (pathPtr)
+    {
+        path.push(pathPtr->getState());
+        pathPtr = pathPtr->getParent();
     }
 }
 
@@ -45,11 +64,15 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
         if (currentState == goalNode.getState())
         {
             goalFound = true;
+
+            //getOptimalPath(std::shared_ptr<Node>(&currentNode));
+
             return currentNode.getDepth();
         }
 
         openList.pop();
         closedList.insert(currentState.toInt());
+
 
         for (auto i : neighbours.getAdjacentOf(currentState.getEmptyIndex()))
         {
@@ -59,9 +82,7 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
             if (closedList.find(childState.toInt()) != closedList.end())
                 continue;
 
-
             Node* childNode = new Node(childState, std::shared_ptr<Node>(&currentNode), currentNode.getDepth() + 1);
-
             openList.push({ *childNode, evaluateNode(*childNode, h) });
             
         }   
@@ -100,3 +121,10 @@ unsigned int Pathfinder::evaluateNode(const Node& node, std::function<unsigned i
 
     return evaluation;
 }
+
+void Pathfinder::summary() const
+{
+   
+}
+
+

@@ -11,7 +11,7 @@ unsigned int manhattanSum(const State& state)
 	std::vector<unsigned int> tiles = state.getTiles();
 	unsigned int currSize = state.getBoardSize();
 
-	for (unsigned int i = 0; i < currSize; i++)
+	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		if (tiles[i] == 0)
 			continue;
@@ -39,6 +39,7 @@ unsigned int countDifferences(const State& state)
 
 	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
+
 		if (tiles[i] == 0)
 			continue;
 
@@ -47,6 +48,37 @@ unsigned int countDifferences(const State& state)
 	}
 
 	return count;
+}
+
+unsigned int euqlideanSum(const State& state)
+{
+	unsigned int totalSum = 0;
+
+	unsigned int euqlid = 0;
+
+	int currX, currY, goalX, goalY;
+
+	std::vector<unsigned int> tiles = state.getTiles();
+	unsigned int currSize = state.getBoardSize();
+
+	for (unsigned int i = 0; i < tiles.size(); i++)
+	{
+		if (tiles[i] == 0)
+			continue;
+
+		currX = i / currSize;
+		currY = i % currSize;
+
+		goalX = tiles[i] / currSize;
+		goalY = tiles[i] % currSize;
+
+
+		euqlid = (goalX - currX) * (goalX - currX) + (goalY - currY) * (goalY - currY);
+
+		totalSum += euqlid;
+	}
+
+	return totalSum;
 }
 
 unsigned int combined(const State& state)
