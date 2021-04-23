@@ -82,8 +82,8 @@ unsigned int Pathfinder::getOptimalBasedOn(std::function<unsigned int(const Stat
             if (closedList.find(childState.toInt()) != closedList.end())
                 continue;
 
-            Node* childNode = new Node(childState, std::shared_ptr<Node>(&currentNode), currentNode.getDepth() + 1);
-            openList.push({ *childNode, evaluateNode(*childNode, h) });
+            Node childNode(childState, nullptr, currentNode.getDepth() + 1);
+            openList.push({ childNode, evaluateNode(childNode, h) });
             
         }   
         
